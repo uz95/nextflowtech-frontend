@@ -1,0 +1,11 @@
+<router-outlet />
+
+@if (loading.isLoading()) {
+  <div class="global-loading-overlay" role="status" aria-live="polite" aria-label="Loading">
+    <div class="global-loading-card">
+      <div class="ball-loader" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+}

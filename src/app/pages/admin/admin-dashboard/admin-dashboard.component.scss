@@ -1,0 +1,37 @@
+.admin-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.metric mat-card-content {
+  display: grid;
+  gap: 8px;
+}
+
+.metric mat-icon {
+  color: var(--primary);
+}
+
+.metric span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.metric strong {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.active mat-icon { color: var(--success); }
+.suspended mat-icon,
+.expired mat-icon { color: var(--danger); }
+.trial mat-icon { color: var(--accent); }
+
+@media (max-width: 1100px) {
+  .admin-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .admin-metrics { grid-template-columns: 1fr; }
+}

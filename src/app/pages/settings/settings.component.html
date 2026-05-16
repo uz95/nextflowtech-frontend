@@ -1,0 +1,138 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Settings</h1>
+      <p class="page-subtitle">Business profile, invoice identity, and subscription readiness.</p>
+    </div>
+  </div>
+
+  <section class="grid two">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Business profile</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="save()" class="grid two">
+          <div class="logo-panel full-width">
+            <div class="logo-preview" [class.empty]="!logoPreviewUrl">
+              @if (logoPreviewUrl) {
+                <img [src]="logoPreviewUrl" alt="Business logo">
+              } @else {
+                <mat-icon>storefront</mat-icon>
+              }
+            </div>
+            <div class="logo-actions">
+              <h2>Invoice logo</h2>
+              <p>PNG or JPG, up to 2 MB.</p>
+              <input #logoInput hidden type="file" accept="image/png,image/jpeg" (change)="uploadLogo($event)">
+              <button mat-stroked-button color="primary" type="button" [disabled]="logoUploading" (click)="logoInput.click()">
+                <mat-icon>upload</mat-icon>
+                Upload logo
+              </button>
+              @if (logoUploading) {
+                <div class="inline-ball-loader" role="status" aria-label="Uploading logo">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <mat-form-field appearance="outline"><mat-label>Business name</mat-label><input matInput formControlName="businessName"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Currency</mat-label><input matInput maxlength="3" formControlName="currency"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Logo URL</mat-label><input matInput formControlName="logoUrl"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Tax number</mat-label><input matInput formControlName="taxNumber"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Email</mat-label><input matInput type="email" formControlName="email"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Phone</mat-label><input matInput formControlName="phone"></mat-form-field>
+          <mat-form-field appearance="outline" class="full-width"><mat-label>Address</mat-label><textarea matInput rows="4" formControlName="address"></textarea></mat-form-field>
+
+          <section class="invoice-settings full-width">
+            <div class="section-heading">
+              <div>
+                <h2>Invoice template</h2>
+                <p>Reusable layout and payment copy for PDF and shared invoices.</p>
+              </div>
+            </div>
+
+            <div class="template-layout">
+              <div class="template-fields">
+                <mat-form-field appearance="outline">
+                  <mat-label>Template design</mat-label>
+                  <mat-select formControlName="invoiceTemplate">
+                    @for (template of invoiceTemplates; track template.value) {
+                      <mat-option [value]="template.value">{{ template.label }} - {{ template.description }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <div class="color-row">
+                  <input class="color-input" type="color" formControlName="invoiceAccentColor" aria-label="Invoice accent color">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Accent color</mat-label>
+                    <input matInput maxlength="7" formControlName="invoiceAccentColor">
+                  </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Payment instructions / bank details</mat-label>
+                  <textarea matInput rows="5" formControlName="invoicePaymentInstructions" placeholder="Bank:&#10;Account title:&#10;Account number / IBAN:"></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Invoice footer note</mat-label>
+                  <textarea matInput rows="2" formControlName="invoiceFooterNote"></textarea>
+                </mat-form-field>
+              </div>
+
+              <div
+                class="invoice-preview"
+                [class.modern]="form.controls.invoiceTemplate.value === 'modern'"
+                [class.compact]="form.controls.invoiceTemplate.value === 'compact'"
+                [style.--invoice-accent]="form.controls.invoiceAccentColor.value">
+                <div class="preview-bar"></div>
+                <div class="preview-header">
+                  <div>
+                    <strong>{{ form.controls.businessName.value || 'Business name' }}</strong>
+                    <span>{{ form.controls.email.value || 'billing@example.com' }}</span>
+                  </div>
+                  <div class="preview-meta">
+                    <strong>INVOICE</strong>
+                    <span>INV-0001</span>
+                  </div>
+                </div>
+                <div class="preview-bill">
+                  <span>Bill to</span>
+                  <strong>Customer name</strong>
+                </div>
+                <div class="preview-lines">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="preview-payment">
+                  <strong>Payment instructions</strong>
+                  <p>{{ form.controls.invoicePaymentInstructions.value || 'Bank details and payment terms will appear here.' }}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="actions"><button mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon>Save settings</button></div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Subscription</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (subscription) {
+          <p><strong>{{ subscription.planName }}</strong> plan</p>
+          <p>Invoices this month: {{ subscription.invoicesCreatedThisMonth }} / {{ subscription.monthlyInvoiceLimit || 'Unlimited' }}</p>
+          <p>Status: {{ subscription.canCreateInvoice ? 'Can create invoices' : 'Invoice limit reached' }}</p>
+        }
+        <p class="page-subtitle">Stripe is intentionally not integrated in the MVP. Plan records and enforcement hooks are ready for a future billing provider.</p>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</div>

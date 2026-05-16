@@ -1,0 +1,37 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Customers</h1>
+      <p class="page-subtitle">Search, sort, and maintain customer records.</p>
+    </div>
+    <a mat-flat-button color="primary" routerLink="/customers/new"><mat-icon>person_add</mat-icon>Add customer</a>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Search customers</mat-label>
+    <input matInput [formControl]="search" (keyup.enter)="page = 1; load()">
+    <button mat-icon-button matSuffix type="button" aria-label="Search" (click)="page = 1; load()"><mat-icon>search</mat-icon></button>
+    <button mat-icon-button matSuffix type="button" aria-label="Clear" (click)="resetSearch()"><mat-icon>close</mat-icon></button>
+  </mat-form-field>
+
+  <div class="table-wrap mat-elevation-z1">
+    <table mat-table matSort [dataSource]="items" (matSortChange)="sortChanged($event)">
+      <ng-container matColumnDef="fullName"><th mat-header-cell *matHeaderCellDef mat-sort-header="lastName">Name</th><td mat-cell *matCellDef="let row">{{ row.fullName }}</td></ng-container>
+      <ng-container matColumnDef="email"><th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th><td mat-cell *matCellDef="let row">{{ row.email || '-' }}</td></ng-container>
+      <ng-container matColumnDef="phone"><th mat-header-cell *matHeaderCellDef>Phone</th><td mat-cell *matCellDef="let row">{{ row.phone || '-' }}</td></ng-container>
+      <ng-container matColumnDef="createdAt"><th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th><td mat-cell *matCellDef="let row">{{ row.createdAt | date }}</td></ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row" class="actions">
+          <a mat-icon-button [routerLink]="['/customers', row.id, 'ledger']" aria-label="Customer ledger"><mat-icon>account_balance_wallet</mat-icon></a>
+          <a mat-icon-button [routerLink]="['/customers', row.id, 'edit']" aria-label="Edit customer"><mat-icon>edit</mat-icon></a>
+          <button mat-icon-button color="warn" type="button" aria-label="Delete customer" (click)="delete(row)"><mat-icon>delete</mat-icon></button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    @if (!items.length) { <div class="empty-state">No customers found.</div> }
+    <mat-paginator [length]="total" [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50]" (page)="pageChanged($event)" />
+  </div>
+</div>

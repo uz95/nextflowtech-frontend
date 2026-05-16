@@ -1,0 +1,29 @@
+.notifications-list {
+  display: grid;
+  gap: 12px;
+}
+
+mat-card.unread {
+  border-color: rgba(20, 107, 111, 0.36);
+}
+
+mat-card-content {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+p {
+  margin: 4px 0;
+}
+
+span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  mat-card-content { grid-template-columns: 32px 1fr; }
+  button { grid-column: 2; justify-self: start; }
+}

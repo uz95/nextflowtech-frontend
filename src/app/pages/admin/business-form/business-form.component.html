@@ -1,0 +1,40 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">{{ id ? 'Edit Business' : 'Add Business' }}</h1>
+      <p class="page-subtitle">Set the owner contact, plan, and account status.</p>
+    </div>
+    <a mat-button routerLink="/admin/businesses"><mat-icon>arrow_back</mat-icon>Back</a>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="grid two">
+        <mat-form-field appearance="outline"><mat-label>Business name</mat-label><input matInput formControlName="businessName"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Owner name</mat-label><input matInput formControlName="ownerName"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Owner email</mat-label><input matInput type="email" formControlName="ownerEmail"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Phone</mat-label><input matInput formControlName="phone"></mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Plan</mat-label>
+          <mat-select formControlName="planCode">
+            @for (plan of plans; track plan.code) {
+              <mat-option [value]="plan.code">{{ plan.label }} - {{ plan.description }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            @for (status of statuses; track status) {
+              <mat-option [value]="status">{{ status }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div class="actions full-width">
+          <button mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon>Save business</button>
+          <a mat-button routerLink="/admin/businesses">Cancel</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

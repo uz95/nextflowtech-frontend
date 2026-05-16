@@ -1,0 +1,57 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Expenses</h1>
+      <p class="page-subtitle">Capture operating costs and review monthly totals.</p>
+    </div>
+  </div>
+
+  <section class="expense-layout">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ editingId ? 'Edit expense' : 'Add expense' }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="save()" class="expense-form">
+          <mat-form-field appearance="outline"><mat-label>Title</mat-label><input matInput formControlName="title"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Category</mat-label><input matInput formControlName="category"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Amount</mat-label><input matInput type="number" min="0" formControlName="amount"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Date</mat-label><input matInput [matDatepicker]="picker" formControlName="expenseDate"><mat-datepicker-toggle matSuffix [for]="picker" /><mat-datepicker #picker /></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Notes</mat-label><textarea matInput rows="3" formControlName="notes"></textarea></mat-form-field>
+          <div class="actions">
+            <button mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon>{{ editingId ? 'Update' : 'Save' }}</button>
+            <button mat-button type="button" (click)="resetForm()">Clear</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="list-panel">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Search expenses</mat-label>
+        <input matInput [formControl]="search" (keyup.enter)="page = 1; load()">
+        <button mat-icon-button matSuffix type="button" aria-label="Search" (click)="page = 1; load()"><mat-icon>search</mat-icon></button>
+      </mat-form-field>
+
+      <div class="table-wrap mat-elevation-z1">
+        <table mat-table [dataSource]="items">
+          <ng-container matColumnDef="title"><th mat-header-cell *matHeaderCellDef>Title</th><td mat-cell *matCellDef="let row">{{ row.title }}</td></ng-container>
+          <ng-container matColumnDef="category"><th mat-header-cell *matHeaderCellDef>Category</th><td mat-cell *matCellDef="let row">{{ row.category }}</td></ng-container>
+          <ng-container matColumnDef="amount"><th mat-header-cell *matHeaderCellDef>Amount</th><td mat-cell *matCellDef="let row">{{ row.amount | currency }}</td></ng-container>
+          <ng-container matColumnDef="expenseDate"><th mat-header-cell *matHeaderCellDef>Date</th><td mat-cell *matCellDef="let row">{{ row.expenseDate | date }}</td></ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row" class="actions">
+              <button mat-icon-button type="button" aria-label="Edit expense" (click)="edit(row)"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn" type="button" aria-label="Delete expense" (click)="delete(row)"><mat-icon>delete</mat-icon></button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        @if (!items.length) { <div class="empty-state">No expenses found.</div> }
+        <mat-paginator [length]="total" [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50]" (page)="pageChanged($event)" />
+      </div>
+    </div>
+  </section>
+</div>

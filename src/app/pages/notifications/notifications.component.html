@@ -1,0 +1,30 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Notifications</h1>
+      <p class="page-subtitle">Invoice, payment, stock, subscription, and system alerts.</p>
+    </div>
+    <button mat-flat-button color="primary" type="button" (click)="markAllRead()"><mat-icon>done_all</mat-icon>Mark all read</button>
+  </div>
+
+  <section class="notifications-list">
+    @for (item of items; track item.id) {
+      <mat-card [class.unread]="!item.isRead">
+        <mat-card-content>
+          <mat-icon [ngClass]="item.type">{{ item.isRead ? 'notifications_none' : 'notifications_active' }}</mat-icon>
+          <div>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.message }}</p>
+            <span>{{ item.type }} | {{ item.createdAt | date:'short' }}</span>
+          </div>
+          @if (!item.isRead) {
+            <button mat-stroked-button type="button" (click)="markRead(item)">Mark read</button>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+    @if (!items.length) {
+      <div class="empty-state">No notifications yet.</div>
+    }
+  </section>
+</div>

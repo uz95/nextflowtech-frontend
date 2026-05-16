@@ -1,0 +1,49 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Super Admin Dashboard</h1>
+      <p class="page-subtitle">Business status and subscription health across the platform.</p>
+    </div>
+    <a mat-flat-button color="primary" routerLink="/admin/businesses/new"><mat-icon>add_business</mat-icon>Add business</a>
+  </div>
+
+  @if (dashboard) {
+    <section class="admin-metrics">
+      <mat-card class="metric">
+        <mat-card-content>
+          <mat-icon>business</mat-icon>
+          <span>Total businesses</span>
+          <strong>{{ dashboard.totalBusinesses }}</strong>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="metric active">
+        <mat-card-content>
+          <mat-icon>check_circle</mat-icon>
+          <span>Active businesses</span>
+          <strong>{{ dashboard.activeBusinesses }}</strong>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="metric suspended">
+        <mat-card-content>
+          <mat-icon>pause_circle</mat-icon>
+          <span>Suspended businesses</span>
+          <strong>{{ dashboard.suspendedBusinesses }}</strong>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="metric expired">
+        <mat-card-content>
+          <mat-icon>event_busy</mat-icon>
+          <span>Expired subscriptions</span>
+          <strong>{{ dashboard.expiredSubscriptions }}</strong>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="metric trial">
+        <mat-card-content>
+          <mat-icon>science</mat-icon>
+          <span>Trial accounts</span>
+          <strong>{{ dashboard.trialAccounts }}</strong>
+        </mat-card-content>
+      </mat-card>
+    </section>
+  }
+</div>

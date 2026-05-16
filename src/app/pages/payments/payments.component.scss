@@ -1,0 +1,16 @@
+.payment-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 900px) {
+  .payment-form { grid-template-columns: 1fr; }
+}

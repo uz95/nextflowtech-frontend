@@ -1,0 +1,157 @@
+.public-invoice {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f6f7f3;
+}
+
+mat-card {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.invoice-shell {
+  --invoice-accent: #08746f;
+}
+
+.accent-bar {
+  display: none;
+  height: 8px;
+  margin: -16px -16px 22px;
+  border-radius: 8px 8px 0 0;
+  background: var(--invoice-accent);
+}
+
+.invoice-shell.modern .accent-bar {
+  display: block;
+}
+
+.invoice-shell.compact mat-card-content {
+  padding: 18px;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+}
+
+h1 {
+  color: var(--ink);
+}
+
+h2,
+.invoice-meta h2 {
+  color: var(--invoice-accent);
+}
+
+h1, h2, p {
+  margin: 0;
+}
+
+.invoice-meta {
+  text-align: right;
+}
+
+.bill-to {
+  display: grid;
+  gap: 4px;
+  margin: 24px 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--invoice-accent);
+}
+
+.bill-to span {
+  color: var(--invoice-accent);
+  font-weight: 700;
+}
+
+.totals {
+  display: grid;
+  gap: 8px;
+  max-width: 280px;
+  margin: 24px 0 0 auto;
+}
+
+.totals div {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.totals div:last-child {
+  color: var(--invoice-accent);
+  font-size: 16px;
+}
+
+.invoice-sections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.notes,
+.payment-instructions {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.payment-instructions {
+  border-color: var(--invoice-accent);
+}
+
+.notes strong,
+.payment-instructions strong {
+  color: var(--invoice-accent);
+}
+
+.notes p,
+.payment-instructions p {
+  color: var(--muted);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.invoice-footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.invoice-shell.modern .mat-mdc-header-row {
+  background: var(--invoice-accent) !important;
+}
+
+.invoice-shell.modern .mat-mdc-header-cell {
+  color: #ffffff !important;
+}
+
+.invoice-shell.compact .invoice-header {
+  padding-bottom: 14px;
+}
+
+.invoice-shell.compact .bill-to {
+  margin: 16px 0;
+}
+
+.invoice-shell.compact .totals,
+.invoice-shell.compact .invoice-sections,
+.invoice-shell.compact .invoice-footer {
+  margin-top: 16px;
+}
+
+@media (max-width: 700px) {
+  .public-invoice { padding: 12px; }
+  .invoice-header { display: grid; }
+  .invoice-meta { text-align: left; }
+  .invoice-sections { grid-template-columns: 1fr; }
+}

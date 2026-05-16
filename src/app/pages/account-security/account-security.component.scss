@@ -1,0 +1,29 @@
+.security-card {
+  max-width: 560px;
+}
+
+.password-form {
+  display: grid;
+  gap: 14px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.field-error {
+  margin: -8px 0 0;
+  color: #ba1a1a;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .security-card {
+    max-width: none;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}

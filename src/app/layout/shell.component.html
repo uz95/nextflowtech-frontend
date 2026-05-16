@@ -1,0 +1,51 @@
+<mat-sidenav-container class="shell">
+  <mat-sidenav class="sidenav" mode="side" opened>
+    <div class="brand">
+      @if (logoUrl) {
+        <img class="brand-logo" [src]="logoUrl" alt="Business logo">
+      } @else {
+        <div class="mark">SB</div>
+      }
+      <div>
+        <strong>{{ brandTitle }}</strong>
+        <span>{{ brandSubtitle }}</span>
+      </div>
+    </div>
+    <div class="nav-kicker">
+      <span></span>
+      <small>{{ isSuperAdmin ? 'Control room' : 'Business pulse' }}</small>
+    </div>
+    <mat-nav-list>
+      @for (item of navItems; track item.path) {
+        <a mat-list-item [routerLink]="item.path" routerLinkActive="active-link">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="shell-header">
+      <mat-toolbar class="topbar">
+        <div class="workspace-status">
+          <span class="pulse-dot"></span>
+          <span>{{ isSuperAdmin ? 'Admin command center' : 'Live business cockpit' }}</span>
+        </div>
+        <div class="topbar-actions">
+          <button mat-icon-button aria-label="Notifications" (click)="openNotifications()" [matBadge]="unreadCount || null" matBadgeColor="warn" matBadgeSize="small">
+            <mat-icon>notifications</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Log out" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+    </div>
+    <main class="content">
+      <div class="route-frame">
+        <router-outlet />
+      </div>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,211 @@
+.dashboard-command {
+  align-items: center;
+}
+
+.dashboard-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: min(100%, 280px);
+  padding: 12px 14px;
+  border: 1px solid rgba(8, 116, 111, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(8, 116, 111, 0.1), rgba(255, 255, 255, 0.88)),
+    rgba(255, 255, 255, 0.78);
+  box-shadow: 0 16px 34px rgba(24, 33, 31, 0.08);
+  animation: float-in 520ms ease both;
+}
+
+.dashboard-badge mat-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary), var(--mint));
+  box-shadow: 0 14px 26px rgba(8, 116, 111, 0.22);
+}
+
+.dashboard-badge span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.dashboard-badge strong {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink);
+  font-size: 19px;
+}
+
+.dashboard-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid rgba(8, 116, 111, 0.18);
+  border-radius: 8px;
+  color: var(--primary-deep);
+  background:
+    linear-gradient(90deg, rgba(8, 116, 111, 0.1), rgba(255, 255, 255, 0.88)),
+    rgba(255, 255, 255, 0.78);
+  box-shadow: 0 14px 32px rgba(24, 33, 31, 0.08);
+}
+
+.dashboard-status.error {
+  border-color: rgba(185, 52, 72, 0.22);
+  color: var(--danger);
+  background:
+    linear-gradient(90deg, rgba(185, 52, 72, 0.09), rgba(255, 255, 255, 0.9)),
+    rgba(255, 255, 255, 0.78);
+}
+
+.dashboard-status .inline-ball-loader {
+  width: 96px;
+}
+
+.metric-grid {
+  perspective: 900px;
+}
+
+.metric {
+  min-height: 142px;
+}
+
+.metric mat-card-content {
+  position: relative;
+  display: grid;
+  gap: 9px;
+  min-height: 142px;
+  padding: 22px;
+}
+
+.metric mat-card-content::after {
+  content: '';
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 84px;
+  height: 38px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent 0 10%, rgba(255, 255, 255, 0.72) 10% 16%, transparent 16% 28%, rgba(255, 255, 255, 0.72) 28% 36%, transparent 36%),
+    linear-gradient(135deg, rgba(8, 116, 111, 0.18), rgba(215, 91, 63, 0.14));
+  opacity: 0.82;
+  transform: skewX(-12deg);
+  animation: meter-glide 3.2s ease-in-out infinite alternate;
+}
+
+.metric mat-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--primary);
+  font-size: 30px;
+  background: var(--primary-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 14px 28px rgba(8, 116, 111, 0.14);
+}
+
+.metric span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.metric strong {
+  color: var(--ink);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 900;
+}
+
+.metric.revenue mat-icon { color: var(--success); background: #ddf8ec; }
+.metric.unpaid mat-icon { color: var(--warning); background: var(--gold-soft); }
+.metric.expenses mat-icon { color: var(--danger); background: #fde7e9; }
+.metric.profit mat-icon { color: var(--primary); background: var(--primary-soft); }
+
+.revenue-card mat-card-content {
+  padding-top: 10px;
+}
+
+.chart-card {
+  min-height: 280px;
+  background:
+    linear-gradient(180deg, rgba(8, 116, 111, 0.07), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(37, 62, 56, 0.06) 0 1px, transparent 1px 46px);
+}
+
+svg {
+  width: 100%;
+  height: 280px;
+  display: block;
+}
+
+svg line {
+  stroke: rgba(37, 62, 56, 0.16);
+  stroke-width: 2;
+}
+
+svg polyline {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  filter: drop-shadow(0 12px 18px rgba(215, 91, 63, 0.22));
+  animation: draw-chart 980ms ease forwards;
+}
+
+svg text {
+  fill: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.dashboard-loading {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboard-loading div {
+  height: 140px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(8, 116, 111, 0.1), rgba(255, 255, 255, 0.5));
+  background-size: 220% 100%;
+  animation: skeleton-sweep 1.3s ease-in-out infinite;
+}
+
+@keyframes draw-chart {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes meter-glide {
+  from { transform: translateX(0) skewX(-12deg); opacity: 0.55; }
+  to { transform: translateX(-12px) skewX(-12deg); opacity: 0.95; }
+}
+
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes skeleton-sweep {
+  from { background-position: 0% 50%; }
+  to { background-position: 220% 50%; }
+}
+
+@media (max-width: 900px) {
+  .dashboard-badge { width: 100%; }
+  .dashboard-loading { grid-template-columns: 1fr; }
+}

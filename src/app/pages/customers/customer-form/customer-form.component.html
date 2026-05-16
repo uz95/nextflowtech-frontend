@@ -1,0 +1,26 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">{{ id ? 'Edit customer' : 'Add customer' }}</h1>
+      <p class="page-subtitle">Keep contact details and notes simple.</p>
+    </div>
+    <a mat-button routerLink="/customers"><mat-icon>arrow_back</mat-icon>Back</a>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="grid two">
+        <mat-form-field appearance="outline"><mat-label>First name</mat-label><input matInput formControlName="firstName"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Last name</mat-label><input matInput formControlName="lastName"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Email</mat-label><input matInput type="email" formControlName="email"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Phone</mat-label><input matInput formControlName="phone"></mat-form-field>
+        <mat-form-field appearance="outline" class="full-width"><mat-label>Address</mat-label><textarea matInput rows="3" formControlName="address"></textarea></mat-form-field>
+        <mat-form-field appearance="outline" class="full-width"><mat-label>Notes</mat-label><textarea matInput rows="4" formControlName="notes"></textarea></mat-form-field>
+        <div class="actions">
+          <button mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon>Save customer</button>
+          <a mat-button routerLink="/customers">Cancel</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

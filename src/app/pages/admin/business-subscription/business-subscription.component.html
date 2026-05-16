@@ -1,0 +1,46 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Business Subscription</h1>
+      <p class="page-subtitle">{{ business?.businessName || 'Business' }}</p>
+    </div>
+    <a mat-button routerLink="/admin/businesses"><mat-icon>arrow_back</mat-icon>Back</a>
+  </div>
+
+  @if (business?.subscription) {
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Current subscription</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="grid four">
+        <div><span class="muted">Plan</span><br><strong>{{ business?.subscription?.planName }}</strong></div>
+        <div><span class="muted">Price</span><br><strong>{{ business?.subscription?.price | currency }}</strong></div>
+        <div><span class="muted">Start</span><br><strong>{{ business?.subscription?.startDate | date }}</strong></div>
+        <div><span class="muted">End</span><br><strong>{{ business?.subscription?.endDate ? (business?.subscription?.endDate | date) : '-' }}</strong></div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="grid two">
+        <mat-form-field appearance="outline"><mat-label>Plan name</mat-label><input matInput formControlName="planName"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Price</mat-label><input matInput type="number" min="0" formControlName="price"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>Start date</mat-label><input matInput type="date" formControlName="startDate"></mat-form-field>
+        <mat-form-field appearance="outline"><mat-label>End date</mat-label><input matInput type="date" formControlName="endDate"></mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            @for (status of statuses; track status) {
+              <mat-option [value]="status">{{ status }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div class="actions full-width">
+          <button mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon>Save subscription</button>
+          <a mat-button routerLink="/admin/businesses">Cancel</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
