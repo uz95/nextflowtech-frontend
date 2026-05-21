@@ -3,6 +3,7 @@ import { authChildGuard, authGuard } from './core/guards/auth.guard';
 import { ShellComponent } from './layout/shell.component';
 import { AccountSecurityComponent } from './pages/account-security/account-security.component';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
+import { WhatsAppAccountsComponent } from './pages/admin/whatsapp-accounts/whatsapp-accounts.component';
 import { BusinessFormComponent } from './pages/admin/business-form/business-form.component';
 import { BusinessSubscriptionComponent } from './pages/admin/business-subscription/business-subscription.component';
 import { BusinessesListComponent } from './pages/admin/businesses-list/businesses-list.component';
@@ -19,10 +20,13 @@ import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { InvoiceFormComponent } from './pages/invoices/invoice-form/invoice-form.component';
 import { InvoicesListComponent } from './pages/invoices/invoices-list/invoices-list.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
+import { InboxComponent } from './pages/inbox/inbox.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { PaymentsComponent } from './pages/payments/payments.component';
 import { PublicInvoiceComponent } from './pages/public-invoice/public-invoice.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { QuickRepliesComponent } from './pages/settings/quick-replies/quick-replies.component';
+import { WhatsAppIntegrationComponent } from './pages/settings/whatsapp-integration/whatsapp-integration.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -46,17 +50,21 @@ export const routes: Routes = [
       { path: 'invoices', component: InvoicesListComponent, data: { roles: ['BusinessOwner'] } },
       { path: 'invoices/new', component: InvoiceFormComponent, data: { roles: ['BusinessOwner'] } },
       { path: 'invoices/:id/edit', component: InvoiceFormComponent, data: { roles: ['BusinessOwner'] } },
+      { path: 'inbox', component: InboxComponent, data: { roles: ['BusinessOwner'] } },
       { path: 'payments', component: PaymentsComponent, data: { roles: ['BusinessOwner'] } },
       { path: 'notifications', component: NotificationsComponent, data: { roles: ['BusinessOwner'] } },
       { path: 'inventory', component: InventoryComponent, data: { roles: ['BusinessOwner'] } },
       { path: 'expenses', component: ExpensesComponent, data: { roles: ['BusinessOwner'] } },
       { path: 'settings', component: SettingsComponent, data: { roles: ['BusinessOwner'] } },
+      { path: 'settings/whatsapp', component: WhatsAppIntegrationComponent, data: { roles: ['BusinessOwner'] } },
+      { path: 'settings/quick-replies', component: QuickRepliesComponent, data: { roles: ['BusinessOwner'] } },
       { path: 'account/security', component: AccountSecurityComponent, data: { roles: ['BusinessOwner', 'SuperAdmin'] } },
       { path: 'admin/dashboard', component: AdminDashboardComponent, data: { roles: ['SuperAdmin'] } },
       { path: 'admin/businesses', component: BusinessesListComponent, data: { roles: ['SuperAdmin'] } },
       { path: 'admin/businesses/new', component: BusinessFormComponent, data: { roles: ['SuperAdmin'] } },
       { path: 'admin/businesses/:id/edit', component: BusinessFormComponent, data: { roles: ['SuperAdmin'] } },
-      { path: 'admin/businesses/:id/subscription', component: BusinessSubscriptionComponent, data: { roles: ['SuperAdmin'] } }
+      { path: 'admin/businesses/:id/subscription', component: BusinessSubscriptionComponent, data: { roles: ['SuperAdmin'] } },
+      { path: 'admin/whatsapp-accounts', component: WhatsAppAccountsComponent, data: { roles: ['SuperAdmin'] } }
     ]
   },
   { path: '**', redirectTo: 'dashboard' }

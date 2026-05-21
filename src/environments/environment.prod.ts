@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: '/api',
+  apiUrl: 'https://nextflowtech.runasp.net/api',
   externalAuth: {
     googleClientId: '',
     microsoftClientId: '',

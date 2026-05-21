@@ -1,15 +1,26 @@
-<mat-sidenav-container class="shell">
-  <mat-sidenav class="sidenav" mode="side" opened>
+<mat-sidenav-container class="shell" [autosize]="isMobile">
+  <mat-sidenav class="sidenav" mode="side" opened [class.mobile-collapsed]="isMobile && !mobileNavExpanded" [class.mobile-expanded]="isMobile && mobileNavExpanded">
     <div class="brand">
-      @if (logoUrl) {
-        <img class="brand-logo" [src]="logoUrl" alt="Business logo">
+      @if (isMobile && !mobileNavExpanded) {
+        <button class="mobile-nav-toggle rail-toggle" mat-icon-button type="button" aria-label="Open menu" (click)="toggleMobileNav()">
+          <mat-icon>menu</mat-icon>
+        </button>
       } @else {
-        <div class="mark">SB</div>
+        @if (logoUrl) {
+          <img class="brand-logo" [src]="logoUrl" alt="Business logo">
+        } @else {
+          <div class="mark">SB</div>
+        }
+        <div>
+          <strong>{{ brandTitle }}</strong>
+          <span>{{ brandSubtitle }}</span>
+        </div>
+        @if (isMobile) {
+          <button class="mobile-nav-toggle sidenav-close" mat-icon-button type="button" aria-label="Close menu" (click)="toggleMobileNav()">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
       }
-      <div>
-        <strong>{{ brandTitle }}</strong>
-        <span>{{ brandSubtitle }}</span>
-      </div>
     </div>
     <div class="nav-kicker">
       <span></span>
@@ -17,7 +28,7 @@
     </div>
     <mat-nav-list>
       @for (item of navItems; track item.path) {
-        <a mat-list-item [routerLink]="item.path" routerLinkActive="active-link">
+        <a mat-list-item [routerLink]="item.path" routerLinkActive="active-link" (click)="collapseMenuOnMobile()">
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label }}</span>
         </a>

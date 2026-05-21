@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagedResult, QueryParams } from '../models/api.models';
-import { AdminBusiness, SuperAdminDashboard, UpdateBusinessSubscriptionRequest, UpsertAdminBusinessRequest } from '../models/admin.models';
+import { AdminBusiness, AdminWhatsAppAccount, SuperAdminDashboard, UpdateBusinessSubscriptionRequest, UpsertAdminBusinessRequest } from '../models/admin.models';
 import { ApiService } from './api.service';
 
 @Injectable({ providedIn: 'root' })
@@ -42,5 +42,9 @@ export class AdminService {
 
   updateSubscription(id: string, request: UpdateBusinessSubscriptionRequest): Observable<AdminBusiness> {
     return this.api.put<AdminBusiness>(`admin/businesses/${id}/subscription`, request);
+  }
+
+  whatsAppAccounts(): Observable<AdminWhatsAppAccount[]> {
+    return this.api.get<AdminWhatsAppAccount[]>('admin/whatsapp-accounts');
   }
 }

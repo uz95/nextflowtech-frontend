@@ -1,0 +1,146 @@
+<div class="page inbox-page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">WhatsApp Inbox</h1>
+      <p class="page-subtitle">Shared WhatsApp conversations for this business.</p>
+    </div>
+  </div>
+
+  <section class="inbox-shell">
+    <aside class="conversation-pane">
+      <div class="conversation-controls">
+        <mat-form-field appearance="outline">
+          <mat-label>Search conversations</mat-label>
+          <input matInput [formControl]="search" placeholder="Name or phone">
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-button-toggle-group [formControl]="statusFilter" aria-label="Conversation status">
+          @for (status of statuses; track status) {
+            <mat-button-toggle [value]="status">{{ status || 'All' }}</mat-button-toggle>
+          }
+        </mat-button-toggle-group>
+      </div>
+
+      <div class="conversation-list">
+        @if (loadingConversations) {
+          <div class="empty-state">Loading conversations...</div>
+        } @else if (conversations.length === 0) {
+          <div class="empty-state">No WhatsApp conversations yet.</div>
+        } @else {
+          @for (conversation of conversations; track conversation.id) {
+            <button
+              class="conversation-item"
+              type="button"
+              [class.selected]="selected?.id === conversation.id"
+              (click)="openConversation(conversation)">
+              <span class="avatar">{{ conversation.name.slice(0, 1) || '#' }}</span>
+              <span class="conversation-copy">
+                <strong>{{ conversation.name || conversation.phoneNumber }}</strong>
+                <small>{{ conversation.lastMessageText || 'No messages yet' }}</small>
+              </span>
+              <span class="conversation-meta">
+                <small>{{ conversation.lastMessageAt | date:'shortTime' }}</small>
+                @if (conversation.unreadCount > 0) {
+                  <span class="unread">{{ conversation.unreadCount }}</span>
+                }
+              </span>
+            </button>
+          }
+        }
+      </div>
+    </aside>
+
+    <section class="chat-pane">
+      @if (selected) {
+        <header class="chat-header">
+          <div class="contact-block">
+            <span class="avatar large">{{ selected.name.slice(0, 1) || '#' }}</span>
+            <div>
+              <h2>{{ selected.name || selected.phoneNumber }}</h2>
+              <p>{{ selected.phoneNumber }} @if (selected.assignedUserName) { <span>Assigned to {{ selected.assignedUserName }}</span> }</p>
+            </div>
+          </div>
+
+          <div class="chat-actions">
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select [value]="selected.status" (selectionChange)="changeStatus($event.value)">
+                <mat-option value="Open">Open</mat-option>
+                <mat-option value="Pending">Pending</mat-option>
+                <mat-option value="Closed">Closed</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-stroked-button type="button" (click)="assignToMe()">
+              <mat-icon>person_add</mat-icon>
+              Assign to me
+            </button>
+            @if (selected.assignedUserId) {
+              <button mat-icon-button type="button" aria-label="Unassign conversation" matTooltip="Unassign" (click)="unassign()">
+                <mat-icon>person_remove</mat-icon>
+              </button>
+            }
+          </div>
+        </header>
+
+        <div class="messages">
+          @if (loadingMessages) {
+            <div class="empty-state">Loading messages...</div>
+          } @else if (messages.length === 0) {
+            <div class="empty-state">No messages in this conversation.</div>
+          } @else {
+            @for (message of messages; track message.id) {
+              <article class="message" [ngClass]="message.direction.toLowerCase()">
+                <div class="bubble">
+                  @if (message.messageType === 'Text') {
+                    <p>{{ message.text }}</p>
+                  } @else {
+                    <p>{{ message.messageType }} message saved for history.</p>
+                  }
+                  <footer>
+                    <span>{{ message.createdAt | date:'short' }}</span>
+                    <span>{{ message.status }}</span>
+                  </footer>
+                </div>
+              </article>
+            }
+          }
+        </div>
+
+        <footer class="composer">
+          <button mat-icon-button type="button" [matMenuTriggerFor]="quickRepliesMenu" aria-label="Quick replies" matTooltip="Quick replies">
+            <mat-icon>bolt</mat-icon>
+          </button>
+          <mat-menu #quickRepliesMenu="matMenu">
+            @if (quickReplies.length === 0) {
+              <button mat-menu-item disabled>No active quick replies</button>
+            } @else {
+              @for (reply of quickReplies; track reply.id) {
+                <button mat-menu-item type="button" (click)="insertQuickReply(reply)">
+                  <mat-icon>reply</mat-icon>
+                  <span>{{ reply.title }}</span>
+                </button>
+              }
+            }
+          </mat-menu>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Message</mat-label>
+            <textarea matInput rows="2" [formControl]="messageText" (keydown.control.enter)="send()"></textarea>
+          </mat-form-field>
+
+          <button mat-flat-button color="primary" type="button" [disabled]="sending || !messageText.value.trim()" (click)="send()">
+            <mat-icon>send</mat-icon>
+            Send
+          </button>
+        </footer>
+      } @else {
+        <div class="empty-chat">
+          <mat-icon>forum</mat-icon>
+          <h2>Select a conversation</h2>
+          <p>Incoming WhatsApp messages will appear here after the Meta webhook is connected.</p>
+        </div>
+      }
+    </section>
+  </section>
+</div>

@@ -16,6 +16,7 @@ import { Customer } from '../../core/models/customer.models';
 import { Invoice } from '../../core/models/invoice.models';
 import { Payment, PaymentMethod, UpsertPaymentRequest } from '../../core/models/payment.models';
 import { CustomerService } from '../../core/services/customer.service';
+import { CurrencyService } from '../../core/services/currency.service';
 import { InvoiceService } from '../../core/services/invoice.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { PaymentService } from '../../core/services/payment.service';
@@ -33,9 +34,11 @@ export class PaymentsComponent implements OnInit {
   private readonly paymentsService = inject(PaymentService);
   private readonly invoicesService = inject(InvoiceService);
   private readonly customersService = inject(CustomerService);
+  private readonly currency = inject(CurrencyService);
   private readonly notifications = inject(NotificationService);
   private readonly dialog = inject(MatDialog);
 
+  readonly currencyCode = this.currency.currencyCode;
   readonly search = new FormControl('', { nonNullable: true });
   readonly paymentMethods: PaymentMethod[] = ['Cash', 'Bank Transfer', 'JazzCash', 'EasyPaisa', 'Card', 'Other'];
   readonly displayedColumns = ['paymentDate', 'invoiceNumber', 'customerName', 'paymentMethod', 'amount', 'referenceNumber', 'actions'];

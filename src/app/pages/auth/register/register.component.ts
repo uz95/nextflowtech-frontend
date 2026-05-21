@@ -6,6 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { CURRENCY_OPTIONS } from '../../../core/constants/currency-options';
 import { AuthService } from '../../../core/services/auth.service';
 import { ExternalAuthClientService } from '../../../core/services/external-auth-client.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -13,7 +15,7 @@ import { NotificationService } from '../../../core/services/notification.service
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [ReactiveFormsModule, RouterLink, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule],
   templateUrl: './register.component.html',
   styleUrl: '../auth.scss'
 })
@@ -40,6 +42,7 @@ export class RegisterComponent {
   }
 
   hidePassword = true;
+  readonly currencies = CURRENCY_OPTIONS;
   readonly form = this.fb.nonNullable.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -72,7 +75,7 @@ export class RegisterComponent {
     if (!businessName || currency.length !== 3) {
       this.form.controls.businessName.markAsTouched();
       this.form.controls.currency.markAsTouched();
-      this.notifications.error('Enter business name and 3-letter currency before external sign-up.');
+      this.notifications.error('Enter business name and currency before external sign-up.');
       return;
     }
 

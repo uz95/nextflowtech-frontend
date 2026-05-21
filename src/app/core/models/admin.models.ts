@@ -46,3 +46,16 @@ export interface UpdateBusinessSubscriptionRequest {
   endDate?: string | null;
   status: AdminSubscriptionStatus;
 }
+
+export interface AdminWhatsAppAccount {
+  id: string;
+  businessId: string;
+  businessName: string;
+  displayName: string;
+  phoneNumber?: string | null;
+  phoneNumberId: string;
+  whatsAppBusinessAccountId: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}

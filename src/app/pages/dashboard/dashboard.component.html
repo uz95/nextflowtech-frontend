@@ -8,7 +8,7 @@
       <mat-icon>monitoring</mat-icon>
       <div>
         <span>Collected this month</span>
-        <strong>{{ dashboard.totalCollectedThisMonth | currency }}</strong>
+        <strong>{{ dashboard.totalCollectedThisMonth | currency: currencyCode() }}</strong>
       </div>
     </div>
   </div>
@@ -31,28 +31,28 @@
         <mat-card-content>
           <mat-icon>trending_up</mat-icon>
           <span>Total revenue</span>
-          <strong>{{ dashboard.totalRevenue | currency }}</strong>
+          <strong>{{ dashboard.totalRevenue | currency: currencyCode() }}</strong>
         </mat-card-content>
       </mat-card>
       <mat-card class="metric unpaid">
         <mat-card-content>
           <mat-icon>hourglass_top</mat-icon>
           <span>Total receivable</span>
-          <strong>{{ dashboard.totalReceivable | currency }}</strong>
+          <strong>{{ dashboard.totalReceivable | currency: currencyCode() }}</strong>
         </mat-card-content>
       </mat-card>
       <mat-card class="metric expenses">
         <mat-card-content>
           <mat-icon>payments</mat-icon>
           <span>Total expenses</span>
-          <strong>{{ dashboard.totalExpenses | currency }}</strong>
+          <strong>{{ dashboard.totalExpenses | currency: currencyCode() }}</strong>
         </mat-card-content>
       </mat-card>
       <mat-card class="metric profit">
         <mat-card-content>
           <mat-icon>account_balance_wallet</mat-icon>
           <span>Collected this month</span>
-          <strong>{{ dashboard.totalCollectedThisMonth | currency }}</strong>
+          <strong>{{ dashboard.totalCollectedThisMonth | currency: currencyCode() }}</strong>
         </mat-card-content>
       </mat-card>
     </section>
@@ -62,7 +62,7 @@
         <mat-card-content>
           <mat-icon>warning</mat-icon>
           <span>Overdue amount</span>
-          <strong>{{ dashboard.overdueAmount | currency }}</strong>
+          <strong>{{ dashboard.overdueAmount | currency: currencyCode() }}</strong>
         </mat-card-content>
       </mat-card>
       <mat-card class="metric unpaid">
@@ -99,7 +99,7 @@
             <ng-container matColumnDef="invoiceNumber"><th mat-header-cell *matHeaderCellDef>No.</th><td mat-cell *matCellDef="let row">{{ row.invoiceNumber }}</td></ng-container>
             <ng-container matColumnDef="customerName"><th mat-header-cell *matHeaderCellDef>Customer</th><td mat-cell *matCellDef="let row">{{ row.customerName }}</td></ng-container>
             <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let row"><span class="status" [ngClass]="row.status.toLowerCase()">{{ row.status }}</span></td></ng-container>
-            <ng-container matColumnDef="total"><th mat-header-cell *matHeaderCellDef>Total</th><td mat-cell *matCellDef="let row">{{ row.total | currency }}</td></ng-container>
+            <ng-container matColumnDef="total"><th mat-header-cell *matHeaderCellDef>Total</th><td mat-cell *matCellDef="let row">{{ row.total | currency: currencyCode() }}</td></ng-container>
             <ng-container matColumnDef="dueDate"><th mat-header-cell *matHeaderCellDef>Due</th><td mat-cell *matCellDef="let row">{{ row.dueDate | date }}</td></ng-container>
             <tr mat-header-row *matHeaderRowDef="invoiceColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: invoiceColumns;"></tr>
@@ -117,7 +117,7 @@
             <ng-container matColumnDef="paymentDate"><th mat-header-cell *matHeaderCellDef>Date</th><td mat-cell *matCellDef="let row">{{ row.paymentDate | date }}</td></ng-container>
             <ng-container matColumnDef="invoiceNumber"><th mat-header-cell *matHeaderCellDef>Invoice</th><td mat-cell *matCellDef="let row">{{ row.invoiceNumber || 'No invoice' }}</td></ng-container>
             <ng-container matColumnDef="customerName"><th mat-header-cell *matHeaderCellDef>Customer</th><td mat-cell *matCellDef="let row">{{ row.customerName }}</td></ng-container>
-            <ng-container matColumnDef="amount"><th mat-header-cell *matHeaderCellDef>Amount</th><td mat-cell *matCellDef="let row">{{ row.amount | currency }}</td></ng-container>
+            <ng-container matColumnDef="amount"><th mat-header-cell *matHeaderCellDef>Amount</th><td mat-cell *matCellDef="let row">{{ row.amount | currency: currencyCode() }}</td></ng-container>
             <tr mat-header-row *matHeaderRowDef="paymentColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: paymentColumns;"></tr>
           </table>
@@ -134,7 +134,7 @@
         <mat-card-content class="table-wrap">
           <table mat-table [dataSource]="dashboard.topUnpaidCustomers">
             <ng-container matColumnDef="customerName"><th mat-header-cell *matHeaderCellDef>Customer</th><td mat-cell *matCellDef="let row">{{ row.customerName }}</td></ng-container>
-            <ng-container matColumnDef="balance"><th mat-header-cell *matHeaderCellDef>Balance</th><td mat-cell *matCellDef="let row">{{ row.balance | currency }}</td></ng-container>
+            <ng-container matColumnDef="balance"><th mat-header-cell *matHeaderCellDef>Balance</th><td mat-cell *matCellDef="let row">{{ row.balance | currency: currencyCode() }}</td></ng-container>
             <ng-container matColumnDef="unpaidInvoicesCount"><th mat-header-cell *matHeaderCellDef>Unpaid</th><td mat-cell *matCellDef="let row">{{ row.unpaidInvoicesCount }}</td></ng-container>
             <ng-container matColumnDef="overdueInvoicesCount"><th mat-header-cell *matHeaderCellDef>Overdue</th><td mat-cell *matCellDef="let row">{{ row.overdueInvoicesCount }}</td></ng-container>
             <tr mat-header-row *matHeaderRowDef="unpaidCustomerColumns"></tr>

@@ -12,9 +12,9 @@
 
   @if (ledger) {
     <section class="grid four metric-grid no-print">
-      <mat-card class="metric"><mat-card-content><mat-icon>receipt_long</mat-icon><span>Total invoiced</span><strong>{{ ledger.totalInvoiceAmount | currency }}</strong></mat-card-content></mat-card>
-      <mat-card class="metric"><mat-card-content><mat-icon>payments</mat-icon><span>Total paid</span><strong>{{ ledger.totalPaidAmount | currency }}</strong></mat-card-content></mat-card>
-      <mat-card class="metric"><mat-card-content><mat-icon>account_balance_wallet</mat-icon><span>Balance</span><strong>{{ ledger.totalRemainingBalance | currency }}</strong></mat-card-content></mat-card>
+      <mat-card class="metric"><mat-card-content><mat-icon>receipt_long</mat-icon><span>Total invoiced</span><strong>{{ ledger.totalInvoiceAmount | currency: currencyCode() }}</strong></mat-card-content></mat-card>
+      <mat-card class="metric"><mat-card-content><mat-icon>payments</mat-icon><span>Total paid</span><strong>{{ ledger.totalPaidAmount | currency: currencyCode() }}</strong></mat-card-content></mat-card>
+      <mat-card class="metric"><mat-card-content><mat-icon>account_balance_wallet</mat-icon><span>Balance</span><strong>{{ ledger.totalRemainingBalance | currency: currencyCode() }}</strong></mat-card-content></mat-card>
       <mat-card class="metric"><mat-card-content><mat-icon>warning</mat-icon><span>Overdue invoices</span><strong>{{ ledger.numberOfOverdueInvoices }}</strong></mat-card-content></mat-card>
     </section>
 
@@ -27,9 +27,9 @@
             <ng-container matColumnDef="issueDate"><th mat-header-cell *matHeaderCellDef>Issued</th><td mat-cell *matCellDef="let row">{{ row.issueDate | date }}</td></ng-container>
             <ng-container matColumnDef="dueDate"><th mat-header-cell *matHeaderCellDef>Due</th><td mat-cell *matCellDef="let row">{{ row.dueDate | date }}</td></ng-container>
             <ng-container matColumnDef="paymentStatus"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let row"><span class="status" [ngClass]="row.paymentStatus.toLowerCase()">{{ row.paymentStatus }}</span></td></ng-container>
-            <ng-container matColumnDef="total"><th mat-header-cell *matHeaderCellDef>Total</th><td mat-cell *matCellDef="let row">{{ row.total | currency }}</td></ng-container>
-            <ng-container matColumnDef="paidAmount"><th mat-header-cell *matHeaderCellDef>Paid</th><td mat-cell *matCellDef="let row">{{ row.paidAmount | currency }}</td></ng-container>
-            <ng-container matColumnDef="remainingAmount"><th mat-header-cell *matHeaderCellDef>Balance</th><td mat-cell *matCellDef="let row">{{ row.remainingAmount | currency }}</td></ng-container>
+            <ng-container matColumnDef="total"><th mat-header-cell *matHeaderCellDef>Total</th><td mat-cell *matCellDef="let row">{{ row.total | currency: currencyCode() }}</td></ng-container>
+            <ng-container matColumnDef="paidAmount"><th mat-header-cell *matHeaderCellDef>Paid</th><td mat-cell *matCellDef="let row">{{ row.paidAmount | currency: currencyCode() }}</td></ng-container>
+            <ng-container matColumnDef="remainingAmount"><th mat-header-cell *matHeaderCellDef>Balance</th><td mat-cell *matCellDef="let row">{{ row.remainingAmount | currency: currencyCode() }}</td></ng-container>
             <tr mat-header-row *matHeaderRowDef="invoiceColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: invoiceColumns;"></tr>
           </table>
@@ -43,7 +43,7 @@
             <ng-container matColumnDef="paymentDate"><th mat-header-cell *matHeaderCellDef>Date</th><td mat-cell *matCellDef="let row">{{ row.paymentDate | date }}</td></ng-container>
             <ng-container matColumnDef="invoiceNumber"><th mat-header-cell *matHeaderCellDef>Invoice</th><td mat-cell *matCellDef="let row">{{ row.invoiceNumber || 'No invoice' }}</td></ng-container>
             <ng-container matColumnDef="paymentMethod"><th mat-header-cell *matHeaderCellDef>Method</th><td mat-cell *matCellDef="let row">{{ row.paymentMethod }}</td></ng-container>
-            <ng-container matColumnDef="amount"><th mat-header-cell *matHeaderCellDef>Amount</th><td mat-cell *matCellDef="let row">{{ row.amount | currency }}</td></ng-container>
+            <ng-container matColumnDef="amount"><th mat-header-cell *matHeaderCellDef>Amount</th><td mat-cell *matCellDef="let row">{{ row.amount | currency: currencyCode() }}</td></ng-container>
             <ng-container matColumnDef="referenceNumber"><th mat-header-cell *matHeaderCellDef>Reference</th><td mat-cell *matCellDef="let row">{{ row.referenceNumber || '-' }}</td></ng-container>
             <tr mat-header-row *matHeaderRowDef="paymentColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: paymentColumns;"></tr>
@@ -59,7 +59,7 @@
           <div class="timeline-item">
             <mat-icon>{{ item.type === 'Payment' ? 'payments' : 'receipt_long' }}</mat-icon>
             <div><strong>{{ item.title }}</strong><span>{{ item.date | date }}</span></div>
-            <strong>{{ item.amount | currency }}</strong>
+            <strong>{{ item.amount | currency: currencyCode() }}</strong>
           </div>
         }
       </mat-card-content>
@@ -77,7 +77,7 @@
               <td>{{ p.paymentDate | date }}</td>
               <td>{{ p.invoiceNumber || 'No invoice' }}</td>
               <td>{{ p.paymentMethod }}</td>
-              <td>{{ p.amount | currency }}</td>
+              <td>{{ p.amount | currency: currencyCode() }}</td>
               <td>{{ p.referenceNumber || '-' }}</td>
             </tr>
           }

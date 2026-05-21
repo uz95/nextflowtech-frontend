@@ -4,6 +4,16 @@
       <h1 class="page-title">Settings</h1>
       <p class="page-subtitle">Business profile, invoice identity, and subscription readiness.</p>
     </div>
+    <div class="actions">
+      <a mat-stroked-button routerLink="/settings/whatsapp">
+        <mat-icon>forum</mat-icon>
+        WhatsApp Integration
+      </a>
+      <a mat-stroked-button routerLink="/settings/quick-replies">
+        <mat-icon>bolt</mat-icon>
+        Quick Replies
+      </a>
+    </div>
   </div>
 
   <section class="grid two">
@@ -38,7 +48,14 @@
           </div>
 
           <mat-form-field appearance="outline"><mat-label>Business name</mat-label><input matInput formControlName="businessName"></mat-form-field>
-          <mat-form-field appearance="outline"><mat-label>Currency</mat-label><input matInput maxlength="3" formControlName="currency"></mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Currency</mat-label>
+            <mat-select formControlName="currency">
+              @for (currency of currencies; track currency.code) {
+                <mat-option [value]="currency.code">{{ currency.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
           <mat-form-field appearance="outline"><mat-label>Logo URL</mat-label><input matInput formControlName="logoUrl"></mat-form-field>
           <mat-form-field appearance="outline"><mat-label>Tax number</mat-label><input matInput formControlName="taxNumber"></mat-form-field>
           <mat-form-field appearance="outline"><mat-label>Email</mat-label><input matInput type="email" formControlName="email"></mat-form-field>

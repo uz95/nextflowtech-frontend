@@ -11,6 +11,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { Invoice, InvoiceStatus } from '../../../core/models/invoice.models';
+import { CurrencyService } from '../../../core/services/currency.service';
 import { InvoiceService } from '../../../core/services/invoice.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
@@ -23,9 +24,11 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 })
 export class InvoicesListComponent implements OnInit {
   private readonly invoices = inject(InvoiceService);
+  private readonly currency = inject(CurrencyService);
   private readonly notifications = inject(NotificationService);
   private readonly dialog = inject(MatDialog);
 
+  readonly currencyCode = this.currency.currencyCode;
   readonly search = new FormControl('', { nonNullable: true });
   readonly status = new FormControl<InvoiceStatus | ''>('', { nonNullable: true });
   displayedColumns = ['invoiceNumber', 'customerName', 'status', 'total', 'paidAmount', 'remainingAmount', 'dueDate', 'actions'];

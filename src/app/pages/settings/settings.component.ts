@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { finalize } from 'rxjs';
+import { CURRENCY_OPTIONS } from '../../core/constants/currency-options';
 import { BusinessProfile, InvoiceTemplate, SubscriptionStatus, UpdateBusinessProfileRequest } from '../../core/models/business.models';
 import { BusinessService } from '../../core/services/business.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -14,7 +16,7 @@ import { NotificationService } from '../../core/services/notification.service';
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule],
+  imports: [RouterLink, ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'
 })
@@ -27,6 +29,7 @@ export class SettingsComponent implements OnInit {
   subscription?: SubscriptionStatus;
   logoPreviewUrl: string | null = null;
   logoUploading = false;
+  readonly currencies = CURRENCY_OPTIONS;
   readonly invoiceTemplates: { value: InvoiceTemplate; label: string; description: string }[] = [
     { value: 'classic', label: 'Classic', description: 'Clean business layout for most invoices.' },
     { value: 'modern', label: 'Modern', description: 'Accent-led header with stronger section contrast.' },

@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { InventoryItem } from '../../core/models/inventory.models';
+import { CurrencyService } from '../../core/services/currency.service';
 import { InventoryService } from '../../core/services/inventory.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
@@ -25,9 +26,11 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 export class InventoryComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly inventory = inject(InventoryService);
+  private readonly currency = inject(CurrencyService);
   private readonly notifications = inject(NotificationService);
   private readonly dialog = inject(MatDialog);
 
+  readonly currencyCode = this.currency.currencyCode;
   readonly search = new FormControl('', { nonNullable: true });
   readonly lowStockOnly = new FormControl(false, { nonNullable: true });
   readonly form = this.fb.nonNullable.group({

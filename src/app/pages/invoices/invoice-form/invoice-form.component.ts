@@ -16,6 +16,7 @@ import { InventoryItem } from '../../../core/models/inventory.models';
 import { Invoice, InvoiceStatus, UpsertInvoiceRequest } from '../../../core/models/invoice.models';
 import { Payment, PaymentMethod, UpsertPaymentRequest } from '../../../core/models/payment.models';
 import { CustomerService } from '../../../core/services/customer.service';
+import { CurrencyService } from '../../../core/services/currency.service';
 import { InventoryService } from '../../../core/services/inventory.service';
 import { InvoiceService } from '../../../core/services/invoice.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -34,6 +35,7 @@ export class InvoiceFormComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly customersService = inject(CustomerService);
+  private readonly currency = inject(CurrencyService);
   private readonly inventoryService = inject(InventoryService);
   private readonly invoicesService = inject(InvoiceService);
   private readonly paymentsService = inject(PaymentService);
@@ -41,6 +43,7 @@ export class InvoiceFormComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
 
   id = this.route.snapshot.paramMap.get('id');
+  readonly currencyCode = this.currency.currencyCode;
   customers: Customer[] = [];
   inventoryItems: InventoryItem[] = [];
   currentInvoice?: Invoice;

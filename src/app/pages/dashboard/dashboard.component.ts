@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Dashboard, MonthlyRevenuePoint } from '../../core/models/dashboard.models';
+import { CurrencyService } from '../../core/services/currency.service';
 import { DashboardService } from '../../core/services/dashboard.service';
 
 @Component({
@@ -16,6 +17,8 @@ import { DashboardService } from '../../core/services/dashboard.service';
 })
 export class DashboardComponent implements OnInit {
   private readonly dashboardService = inject(DashboardService);
+  private readonly currency = inject(CurrencyService);
+  readonly currencyCode = this.currency.currencyCode;
   dashboard: Dashboard = this.emptyDashboard();
   isLoading = true;
   loadError = '';

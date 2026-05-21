@@ -31,7 +31,11 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Currency</mat-label>
-          <input matInput formControlName="currency" maxlength="3">
+          <mat-select formControlName="currency">
+            @for (currency of currencies; track currency.code) {
+              <mat-option [value]="currency.code">{{ currency.label }}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
         <button mat-flat-button color="primary" type="submit">Create account</button>
       </form>

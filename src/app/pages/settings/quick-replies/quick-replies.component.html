@@ -1,0 +1,76 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Quick Replies</h1>
+      <p class="page-subtitle">Reusable WhatsApp responses for the shared inbox.</p>
+    </div>
+  </div>
+
+  <section class="quick-replies-layout">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ editing ? 'Edit quick reply' : 'New quick reply' }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="save()" class="grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Message</mat-label>
+            <textarea matInput rows="7" formControlName="message"></textarea>
+          </mat-form-field>
+
+          <mat-slide-toggle formControlName="isActive">Active</mat-slide-toggle>
+
+          <div class="example-buttons">
+            <button mat-stroked-button type="button" (click)="useExample('Payment Reminder', 'Hi, this is a friendly reminder that your payment is due. Please let us know if you need any help.')">Payment Reminder</button>
+            <button mat-stroked-button type="button" (click)="useExample('Invoice Follow-up', 'Hi, we are following up on the invoice we shared. Please confirm once received.')">Invoice Follow-up</button>
+            <button mat-stroked-button type="button" (click)="useExample('Thank You', 'Thank you for your message. We appreciate your business.')">Thank You</button>
+          </div>
+
+          <div class="actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="saving">
+              <mat-icon>save</mat-icon>
+              {{ editing ? 'Update reply' : 'Create reply' }}
+            </button>
+            @if (editing) {
+              <button mat-button type="button" (click)="cancelEdit()">Cancel</button>
+            }
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <section class="reply-list">
+      @if (loading) {
+        <div class="empty-state">Loading quick replies...</div>
+      } @else if (replies.length === 0) {
+        <div class="empty-state">No quick replies yet.</div>
+      } @else {
+        @for (reply of replies; track reply.id) {
+          <article class="reply-item">
+            <div>
+              <div class="reply-title">
+                <strong>{{ reply.title }}</strong>
+                <span class="status" [class.active]="reply.isActive" [class.suspended]="!reply.isActive">{{ reply.isActive ? 'Active' : 'Inactive' }}</span>
+              </div>
+              <p>{{ reply.message }}</p>
+              <small>Updated {{ reply.updatedAt | date:'medium' }}</small>
+            </div>
+            <div class="reply-actions">
+              <button mat-icon-button type="button" aria-label="Edit quick reply" (click)="edit(reply)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button type="button" aria-label="Delete quick reply" (click)="delete(reply)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </article>
+        }
+      }
+    </section>
+  </section>
+</div>
